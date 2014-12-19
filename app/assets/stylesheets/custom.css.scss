@@ -21,6 +21,11 @@ body {
   padding-top: 60px;
 }
 
+.bear {
+  background: #ff0000;
+  color: red;
+}
+
 section {
   overflow: auto;
 }
@@ -153,4 +158,17 @@ aside {
 
 .gravatar_edit {
   margin-top: 15px;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
 }
