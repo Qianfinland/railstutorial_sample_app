@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  
+
   #get 'users/new'
 
   root 'static_pages#home'
@@ -12,6 +14,10 @@ Rails.application.routes.draw do
 
   #adding users resources to the route file
   resources :users
+  #get 'sessions/new'
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
 
   #get 'static_pages/home'
   # get 'static_pages/help'
