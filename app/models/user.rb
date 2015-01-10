@@ -63,9 +63,9 @@ class User < ActiveRecord::Base
 
   # Sends password reset email.
   def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
+    UserMailer.password_reset(self).deliver
   end
-  
+
   private
 
     # Converts email to all lower-case.
