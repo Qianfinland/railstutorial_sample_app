@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserProfileTest < ActionDispatch::IntegrationTest
+class UsersProfileTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   def setup
