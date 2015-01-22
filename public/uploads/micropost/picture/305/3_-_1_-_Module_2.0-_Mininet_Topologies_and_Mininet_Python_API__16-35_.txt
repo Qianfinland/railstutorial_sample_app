@@ -1,0 +1,336 @@
+Welcome back.
+For the rest of the lesson, we will test a
+few simple setups in Mininet.
+First, we'll try setting up a simple
+topology
+with three hosts connected to a single
+switch.
+Now you can do this by typing the
+following at the command line in the
+virtual machine that you have downloaded
+as part of the assignment for this week.
+So what this does is, first runs the
+Mininet Launcher, and
+then says, run a test, pingall, among the
+hosts in the topology.
+And the topology, which we specify with
+this topo option,
+is a single switch topology with three
+hosts connected to it.
+So this setup uses a default switch
+controller and a default switch.
+Mininet also allows you to use custom
+remote controllers and custom switches.
+Let's now go back into our virtual box set
+up.
+And if you remember we had our open flow
+tutorial virtual machine that
+we were using, and now I'm just going to
+start up that virtual machine.
+And now we can log back in.
+[NOISE].
+And we need to remember, give ourselves
+the host attached interface.
+[BLANK_AUDIO].
+Log back in to R, then
+net environment.
+[NOISE].
+And now we're good to go.
+[BLANK_AUDIO].
+So you can see here, when we run that
+Mininet
+launcher with the test option, and the
+topology
+option, we are asking Mininet to create a
+single
+switch topology with three nodes attached.
+Then you see Mininet doing the work of
+creating the network.
+Then adding a controller, then adding the
+three hosts, adding a switch,
+adding the links between each host and the
+switch, configuring the host.
+Starting the controller and switch,
+running the
+ping all test, and then stopping the
+emulation.
+Let's take a look at the basic Mininet
+command line options.
+So topo allows you to define a topology
+via the command line when Mininet starts
+up.
+So for example, we just saw a topo option
+where we create a single
+switch topology with three hosts connected
+to that switch.
+The switch command line option defines the
+switch that you'll use in that topology.
+So by default, the Open vSwitch software
+is used, but you can define other
+switches.
+Finally, you can use the controller option
+to
+define the controller that you want to
+use.
+If this option is unspecified, then
+Mininet uses
+the default controller with a default
+hub-like behavior.
+So let's try out some other different
+Mininet topologies.
+One option you can specify is the minimal
+network topology.
+The minimal topology simply creates two
+hosts and one switch.
+[BLANK_AUDIO].
+So when we run this in Mininet, we can see
+that Mininet creates
+the network, adds a controller, adds the
+two hosts.
+Adds the single switch, adds the links
+between the hosts
+and the switch, starts the controller and
+starts the switch.
+As a second example we can create a
+linear topology with four hosts and four
+switches.
+What this does is connect one post to each
+of the four switches and then
+connects each of switches together in a
+line, in a linear-like topology.
+So when we run this example in Mininet we
+see slightly different behavior.
+We see once again, the network and
+controller created, then
+we see four hosts created, we see four
+switches created.
+Then we see, respectively, the links
+between each host and its
+respective switch and then between each of
+the switches in sequence.
+As a third example, we can create a
+topology
+where three hosts are all connected to a
+single switch.
+And we have looked at that earlier in this
+lecture.
+Finally, we could use Mininet to create a
+tree topology with a predefined depth and
+fan out.
+Again, we see the same type of
+behavior, except the links reflect a
+tree-like topology.
+Let's take a closer look at how the mn
+wrapper works.
+So briefly, mn executes Python under the
+hood.
+It is a launch script that executes
+specific Python code.
+So consider the option that we used
+before, where
+we said that topo linear, 4, which if you
+recall
+is a linear topology with four hosts each
+connected to
+a switch and the switches connected in a
+linear topology.
+Under the hood, that invokes the Python
+code that we see over here on the right.
+Let me just briefly walk you through this
+code.
+The first two lines simply import packages
+into Python.
+And the next line, linear, basically says,
+create a linear
+topology, and k equals four says, make the
+topology have four nodes.
+Then we invoke Mininet, and we pass it the
+topology that we just created.
+We then start the Mininet emulator, and
+then we run pingAll.
+Finally, we stop the emulator.
+[BLANK_AUDIO].
+We can see that code here in a .py file.
+And we can run it and see what happens.
+So, as expected, we got a topology with
+four
+nodes, every node pinged every other node,
+and then the emulator stopped.
+In addition to using the mn wrapper to
+create topologies, you can
+also create your own Mininet topologies
+directly in Python.
+So here is an example with two hosts and
+one switch.
+Let's walk through this code briefly.
+So again, the first two lines import some
+modules that we need.
+The next line creates an instance of the
+Mininet emulator.
+Then we create the nodes that we will use
+in this network.
+So we have two hosts, h0 and h1, a switch,
+s0, and a controller, c0.
+After we create our nodes, we can create
+links between
+the nodes and the network using the add
+link method.
+So here we create a link between h0 and
+s0.
+One host and the switch.
+And we create a second link between h1 and
+the same switch, s0.
+So at that point both hosts are connected
+to that switch s0.
+We also have an example of host
+configuration options.
+Here you can set the ip address of each
+host using the set ip method.
+Finally, as before, we start the
+emulation.
+We have all of the hosts ping one another.
+And then we stop the emulation.
+[BLANK_AUDIO].
+So, when you run this particular piece of
+code, the emulation runs to
+completion, and you immediately pop back
+out to the command line.
+If you add a line such as this, meaning
+that cli.CLI(net) before a stop, that will
+cause Mininet to escape to the interactive
+command line before the script terminates.
+It's not shown here but you can also use
+addLink
+to specific certain properties of the link
+with additional optional options,
+including bandwidth delay, the maximum
+queue size, and the loss
+rate that you would wish to have on that
+particular link.
+Here is that code in the Emacs buffer as a
+.py script.
+And let's see what happens when we run
+that piece of code.
+As expected, we have two hosts and one
+switch, and they can ping one another.
+Finally, here's an example of a more
+complicated topology generation.
+You can see here that you can use the
+addHost and addLink
+functions inside something like a for
+loop, which allows
+you to create more complicated topologies
+by taking
+advantage of Python's scripting
+capabilities.
+Let's walk through this code in a little
+bit of detail.
+So you can see here that there is a class
+called SingleSwitchTopo
+which is a subclass of the Topo class,
+which we have imported here.
+The init method is basically a
+constructor, so if you're familiar
+with object oriented programming, that is
+the method that gets
+called when an instance of this single
+switch Topo gets invoked.
+So the first thing we do is call the
+constructor of
+the parent class, and then we create the
+first switch, s1.
+Then, we have a for loop that takes a
+parameter, n, which is
+passed in with the constructor, and has a
+default value of 2.
+And depending on that value of n, that
+determines
+how many times we iterate through this for
+loop.
+And for each iteration we add a host and
+we
+add a link that connects the host to the
+switch.
+The Python file then also has a method
+called simpleTest where
+we invoke that class constructor to create
+the topology with an
+argument n equals 4, meaning that we're
+going to have, meaning that
+we will have four hosts connected to that
+single switch topology.
+And as before, we create a Mininet
+emulator and then start the emulation.
+There's an additional diagnostic method
+here called dumpNodeConnections.
+And then, as before, we have the hosts all
+ping one another, and then we stop the
+emulation.
+Here is that piece of code in an Emacs
+buffer.
+And let us now try running that.
+As expected we can see all four hosts
+connected to the switch.
+We can see the host connections dumped to
+standard output.
+And once again, pingall works as expected.
+We can augment this to run a
+system command like ifconfig directly on
+the host.
+Here is that piece of code in an Emacs
+buffer, and here is the output of that
+code.
+You can see clearly the output of the
+ifconfig host call.
+So we have covered quite a bit right here,
+concerning Mininet in this lesson.
+But there are several topics we have not
+yet covered,
+which we will cover later in the course,
+as necessary.
+And you can also consult the Mininet
+tutorial
+to get more information about each of
+these.
+One is how to access the file system.
+So it is worth noting that because Mininet
+uses lightweight OS
+virtualization, the file system that each
+of the hosts sees is shared.
+That means that if you invoke a file
+operation on one of the hosts, such as
+writing
+to a file, then that file would be seen on
+all of the other hosts in your supology.
+File system operations are essentially the
+same
+as they are in regular Python programming.
+Something that we alluded to but did not
+cover was how to set link speeds and
+properties.
+We will cover that in more detail later in
+the course, as the need arises.
+Similarly we will also talk more about how
+to configure Mininet to use custom
+controllers and switches.
+And in particular later in the course, we
+will
+explore how the use of custom controllers
+and switches
+can change the behavior of various
+networks and also
+be used to solve different types of
+networking problems.
+We
+also did not cover very much about host
+configuration.
+We saw one example of a method to set the
+host's IP address.
+But there are many other methods that can
+also be used to set various host
+configuration options.
+We also did not cover how to conduct
+performance measurements inside Mininet.
+And again, we will cover those details as
+we need them throughout the course.
+
